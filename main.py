@@ -1,6 +1,7 @@
 import discord
 from discord.channel import TextChannel
 from discord.ext import commands
+from discord import FFmpegPCMAudio
 import os
 
 my_secret = os.environ['TOKEN']
@@ -39,7 +40,9 @@ async def on_member_remove(member):
 async def join(ctx):
   if (ctx.author.voice):
     channel = ctx.message.author.voice.channel
-    await channel.connect()
+    voice = await channel.connect()
+    source = FFmpegPCMAudio('piano.wav') #inside brackets, put file name
+    voice.play(source)
   else:
     await ctx.send("You are not in a voice channel!")
 
